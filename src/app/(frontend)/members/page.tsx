@@ -1,5 +1,4 @@
 import { getMeUser } from '@/utilities/getMeUser'
-import { redirect } from 'next/navigation'
 import SearchComponent from './SearchComponent'
 
 export default async function Members() {

@@ -11,14 +11,14 @@ export async function POST(req: NextRequest) {
   })
 
   // 2. Optionally, forward to Payload's built-in API
-  const payloadRes = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/payload/form-submissions`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    },
-  )
+  // const payloadRes = await fetch(
+  //   `${process.env.NEXT_PUBLIC_SITE_URL}/api/payload/form-submissions`,
+  //   {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(body),
+  //   },
+  // )
 
   // 3. Return a response to the frontend
   if (!externalRes.ok) {

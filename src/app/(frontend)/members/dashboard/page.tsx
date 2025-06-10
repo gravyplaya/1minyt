@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
 
 import { getMeUser } from '@/utilities/getMeUser'
 import LogoutButton from './LogoutButton'

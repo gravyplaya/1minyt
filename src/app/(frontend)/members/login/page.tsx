@@ -1,7 +1,5 @@
 import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
-
-import { getMeUser } from '@/utilities/getMeUser'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -9,9 +7,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Login() {
-  const { user } = await getMeUser({
-    validUserRedirect: '/members/dashboard',
-  })
+  // const { user } = await getMeUser({
+  //   validUserRedirect: '/members/dashboard',
+  // })
 
   return (
     <div className="container mx-auto px-4 py-16">
@@ -50,9 +48,9 @@ export default async function Login() {
           </button>
         </form>
         <div className="mt-4 text-center">
-          <a href="/members/signup" className="text-blue-600 hover:text-blue-800">
-            Don't have an account? Sign up
-          </a>
+          <Link href="/members/signup" className="text-blue-600 hover:text-blue-800">
+            Don&apos;t have an account? Sign up
+          </Link>
         </div>
       </div>
 

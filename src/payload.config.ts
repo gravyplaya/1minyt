@@ -81,7 +81,7 @@ export default buildConfig({
       generateImage: ({ doc }) => doc?.featuredImage,
     }),
     stripePlugin({
-      stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+      stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       rest: true,
     }),
   ],
