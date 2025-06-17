@@ -15,6 +15,7 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Submissions } from './collections/Submissions'
+import { Products } from './collections/Products'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -68,7 +69,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI,
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Submissions],
+  collections: [Pages, Posts, Media, Categories, Users, Submissions, Products],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
@@ -82,7 +83,12 @@ export default buildConfig({
     }),
     stripePlugin({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
-      rest: true,
+      stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOKS_ENDPOINT_SECRET,
+      webhooks: {
+        'customer.subscription.updated': ({ event, stripe }) => {
+          // do something...
+        },
+      },
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,

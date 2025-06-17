@@ -39,5 +39,10 @@ export const Submissions: CollectionConfig = {
       required: true,
       defaultValue: () => new Date().toISOString(),
     },
+    {
+      name: 'email',
+      type: 'email',
+      required: false,
+    },
   ],
 }

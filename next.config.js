@@ -22,6 +22,17 @@ const nextConfig = {
   },
   reactStrictMode: true,
   redirects,
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        os: false,
+      }
+    }
+    return config
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

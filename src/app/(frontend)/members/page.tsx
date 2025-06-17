@@ -1,10 +1,11 @@
-import { getMeUser } from '@/utilities/getMeUser'
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
 import SearchComponent from './SearchComponent'
 
 export default async function Members() {
-  const { user } = await getMeUser({
-    nullUserRedirect: '/members/login',
-  })
-
-  return <SearchComponent userId={user.id} />
+  const { userId } = await auth()
+  if (!userId) {
+    redirect('/members/login')
+  }
+  return <SearchComponent userId={userId} />
 }

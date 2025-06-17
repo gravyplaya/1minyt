@@ -4,7 +4,7 @@ import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 
 interface SearchComponentProps {
-  userId: number
+  userId: string
 }
 
 interface ChatMessage {
@@ -110,7 +110,7 @@ export default function SearchComponent({ userId }: SearchComponentProps) {
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Transcribe and Summarize
+            Transcribe, Summarize, and Chat
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
             Enter the YouTube URL below to get started

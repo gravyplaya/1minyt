@@ -48,21 +48,21 @@ export const FormBlock: React.FC<
 
   const onSubmit = useCallback(
     (data: FormFieldBlock[]) => {
-      let loadingTimerID: ReturnType<typeof setTimeout>
       const submitForm = async () => {
         setError(undefined)
+        setIsLoading(true)
 
         const dataToSend = Object.entries(data).map(([name, value]) => ({
           field: name,
           value,
         }))
 
-        // delay loading indicator by 1s
-        loadingTimerID = setTimeout(() => {
-          setIsLoading(true)
-        }, 1000)
-
         try {
+          const controller = new AbortController()
+          const timeoutId = setTimeout(() => {
+            controller.abort('Request timeout')
+          }, 10000) // 10 second timeout
+
           const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
             body: JSON.stringify({
               form: formID,
@@ -72,39 +72,45 @@ export const FormBlock: React.FC<
               'Content-Type': 'application/json',
             },
             method: 'POST',
+            signal: controller.signal,
           })
 
-          const res = await req.json()
+          clearTimeout(timeoutId)
 
-          clearTimeout(loadingTimerID)
-
-          if (req.status >= 400) {
-            setIsLoading(false)
-
-            setError({
-              message: res.errors?.[0]?.message || 'Internal Server Error',
-              status: res.status,
-            })
-
-            return
+          if (!req.ok) {
+            const res = await req.json()
+            throw new Error(res.error || res.errors?.[0]?.message || 'Failed to submit form')
           }
 
-          setIsLoading(false)
+          const res = await req.json()
           setHasSubmitted(true)
 
           if (confirmationType === 'redirect' && redirect) {
             const { url } = redirect
-
-            const redirectUrl = url
-
-            if (redirectUrl) router.push(redirectUrl)
+            if (url) router.push(url)
           }
         } catch (err) {
-          console.warn(err)
+          console.error('Form submission error:', err)
+          if (err instanceof Error) {
+            if (err.name === 'AbortError') {
+              setError({
+                message: 'Request timed out. Please try again.',
+                status: '408',
+              })
+            } else {
+              setError({
+                message: err.message,
+                status: '500',
+              })
+            }
+          } else {
+            setError({
+              message: 'Something went wrong. Please try again.',
+              status: '500',
+            })
+          }
+        } finally {
           setIsLoading(false)
-          setError({
-            message: 'Something went wrong.',
-          })
         }
       }
 
