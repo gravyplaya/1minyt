@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { getPayloadClient } from '@/getPayload'
 import { getMeUser } from '@/utilities/getMeUser'
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -11,7 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-08-01',
 })
 
-export async function POST(req: Request) {
+export async function POST() {
   try {
     const { user } = await getMeUser({
       nullUserRedirect: undefined,
