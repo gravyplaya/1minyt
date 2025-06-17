@@ -14,14 +14,14 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     return cacheTag ? `${url}?${cacheTag}` : url
   }
 
-  // If the URL starts with /api/media, convert it to use the public directory
-  if (url.startsWith('/api/media')) {
-    const publicPath = url.replace('/api/media', '/media')
-    const baseUrl = getClientSideURL()
-    return cacheTag ? `${baseUrl}${publicPath}?${cacheTag}` : `${baseUrl}${publicPath}`
-  }
+  // Clean up the URL path
+  let cleanUrl = url
+    .replace('/api/media', '/media') // Remove API prefix
+    .replace('/file/', '/') // Remove file/ prefix
+    .replace(/^\/+/, '/') // Remove leading slashes
+    .replace(/\/+$/, '') // Remove trailing slashes
 
   // For all other URLs, prepend the base URL
   const baseUrl = getClientSideURL()
-  return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
+  return cacheTag ? `${baseUrl}/${cleanUrl}?${cacheTag}` : `${baseUrl}/${cleanUrl}`
 }
