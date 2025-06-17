@@ -9,12 +9,19 @@ import { getClientSideURL } from '@/utilities/getURL'
 export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | null): string => {
   if (!url) return ''
 
-  // Check if URL already has http/https protocol
+  // If the URL is already a full URL, return it as is
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return cacheTag ? `${url}?${cacheTag}` : url
   }
 
-  // Otherwise prepend client-side URL
+  // Clean up the URL path
+  let cleanUrl = url
+    .replace('/api/media', '/media') // Remove API prefix
+    .replace('/file/', '/') // Remove file/ prefix
+    .replace(/^\/+/, '/') // Remove leading slashes
+    .replace(/\/+$/, '') // Remove trailing slashes
+
+  // For all other URLs, prepend the base URL
   const baseUrl = getClientSideURL()
-  return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
+  return cacheTag ? `${baseUrl}/${cleanUrl}?${cacheTag}` : `${baseUrl}/${cleanUrl}`
 }
