@@ -85,7 +85,7 @@ export default buildConfig({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOKS_ENDPOINT_SECRET,
       webhooks: {
-        'customer.subscription.updated': ({ event, stripe }) => {
+        'customer.subscription.updated': ({}) => {
           // do something...
         },
       },

@@ -407,6 +407,7 @@ export interface User {
   id: number;
   name: string;
   roles?: ('admin' | 'user')[] | null;
+  stripeID?: string | null;
   stripeSubscriptionId?: string | null;
   stripeSubscriptionStatus?:
     | ('active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'trialing' | 'unpaid')

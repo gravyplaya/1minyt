@@ -1,8 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/getPayload'
-import { User } from '@/payload-types'
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -11,10 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { updateProfile } from './actions'
-import { ManageBillingButton } from './ManageBillingButton'
+import ManageBillingButton from './ManageBillingButton'
 import { ProfileForm } from './ProfileForm'
 
 export const metadata: Metadata = {
@@ -24,15 +19,18 @@ export const metadata: Metadata = {
 
 async function getUser() {
   const payload = await getPayloadClient()
-  const { user } = await payload.getMe()
-  return user
+  const { docs } = await payload.find({
+    collection: 'users',
+    where: {
+      id: {
+        equals: 'me',
+      },
+    },
+  })
+  return docs[0]
 }
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
+export default async function DashboardPage() {
   const user = await getUser()
 
   if (!user) {

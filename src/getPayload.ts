@@ -1,10 +1,20 @@
 import payload from 'payload'
 import config from '@payload-config'
 
-let cached = (global as any).payload
+interface CachedPayload {
+  client: typeof payload | null
+  promise: Promise<typeof payload> | null
+}
+
+declare global {
+  // eslint-disable-next-line no-var
+  var payload: CachedPayload | undefined
+}
+
+let cached = global.payload
 
 if (!cached) {
-  cached = (global as any).payload = {
+  cached = global.payload = {
     client: null,
     promise: null,
   }

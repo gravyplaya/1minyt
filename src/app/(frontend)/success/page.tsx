@@ -18,16 +18,20 @@ async function getSession(sessionId: string) {
   }
 }
 
-export default async function SuccessPage({
-  searchParams,
-}: {
-  searchParams: { session_id?: string }
-}) {
-  if (!searchParams.session_id) {
+type Args = {
+  searchParams: Promise<{
+    session_id?: string
+  }>
+}
+
+export default async function SuccessPage({ searchParams: searchParamsPromise }: Args) {
+  const { session_id: sessionId } = await searchParamsPromise
+
+  if (!sessionId) {
     return notFound()
   }
 
-  const session = await getSession(searchParams.session_id)
+  const session = await getSession(sessionId)
 
   if (!session) {
     return notFound()

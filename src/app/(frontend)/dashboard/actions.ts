@@ -5,7 +5,16 @@ import { User } from '@/payload-types'
 
 export async function updateProfile(data: Partial<User>) {
   const payload = await getPayloadClient()
-  const { user } = await payload.getMe()
+  const {
+    docs: [user],
+  } = await payload.find({
+    collection: 'users',
+    where: {
+      id: {
+        equals: 'me',
+      },
+    },
+  })
 
   if (!user) {
     throw new Error('Not authenticated')

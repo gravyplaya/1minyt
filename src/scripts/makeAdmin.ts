@@ -1,10 +1,9 @@
 import payload from 'payload'
+import config from '@payload-config'
 
 const makeAdmin = async () => {
   await payload.init({
-    secret: process.env.PAYLOAD_SECRET || '',
-    local: true,
-    mongoURL: process.env.DATABASE_URI || '',
+    config,
   })
 
   try {

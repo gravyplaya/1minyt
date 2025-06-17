@@ -82,7 +82,6 @@ export const FormBlock: React.FC<
             throw new Error(res.error || res.errors?.[0]?.message || 'Failed to submit form')
           }
 
-          const res = await req.json()
           setHasSubmitted(true)
 
           if (confirmationType === 'redirect' && redirect) {
