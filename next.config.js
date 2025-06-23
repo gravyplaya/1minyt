@@ -18,6 +18,10 @@ const nextConfig = {
           protocol: url.protocol.replace(':', ''),
         }
       }),
+      {
+        hostname: '1minyt.vercel.app',
+        protocol: 'https',
+      },
     ],
   },
   reactStrictMode: true,

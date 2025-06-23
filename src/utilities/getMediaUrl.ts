@@ -15,7 +15,7 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
   }
 
   // Clean up the URL path
-  let cleanUrl = url
+  const cleanUrl = url
     .replace('/api/media', '/media') // Remove API prefix
     .replace('/file/', '/') // Remove file/ prefix
     .replace(/^\/+/, '/') // Remove leading slashes

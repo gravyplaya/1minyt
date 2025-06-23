@@ -1408,6 +1408,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   roles?: T;
+  stripeID?: T;
   stripeSubscriptionId?: T;
   stripeSubscriptionStatus?: T;
   stripeSubscriptionCurrentPeriodEnd?: T;
