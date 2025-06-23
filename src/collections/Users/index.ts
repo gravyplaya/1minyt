@@ -74,7 +74,6 @@ export const Users: CollectionConfig = {
       admin: {
         readOnly: true,
       },
-      dbName: 'stripe_id',
     },
     {
       name: 'stripeSubscriptionId',
