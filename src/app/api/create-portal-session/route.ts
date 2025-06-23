@@ -21,7 +21,7 @@ export async function POST() {
       return NextResponse.json({ error: 'User not authenticated' }, { status: 401 })
     }
 
-    if (!user.stripeID) {
+    if (!user.stripeCustomerId) {
       console.error('No Stripe customer ID found for user:', user.id)
       return NextResponse.json({ error: 'No Stripe customer ID found' }, { status: 400 })
     }
@@ -33,14 +33,14 @@ export async function POST() {
 
     try {
       // Verify the customer exists in Stripe
-      const customer = await stripe.customers.retrieve(user.stripeID)
+      const customer = await stripe.customers.retrieve(user.stripeCustomerId)
       if (customer.deleted) {
-        console.error('Customer was deleted in Stripe:', user.stripeID)
+        console.error('Customer was deleted in Stripe:', user.stripeCustomerId)
         return NextResponse.json({ error: 'Invalid Stripe customer' }, { status: 400 })
       }
 
       const session = await stripe.billingPortal.sessions.create({
-        customer: user.stripeID,
+        customer: user.stripeCustomerId,
         return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/members/dashboard`,
       })
 

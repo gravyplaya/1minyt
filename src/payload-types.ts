@@ -407,7 +407,7 @@ export interface User {
   id: number;
   name: string;
   roles?: ('admin' | 'user')[] | null;
-  stripeID?: string | null;
+  stripeCustomerId?: string | null;
   stripeSubscriptionId?: string | null;
   stripeSubscriptionStatus?:
     | ('active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'trialing' | 'unpaid')
@@ -1408,7 +1408,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   roles?: T;
-  stripeID?: T;
+  stripeCustomerId?: T;
   stripeSubscriptionId?: T;
   stripeSubscriptionStatus?: T;
   stripeSubscriptionCurrentPeriodEnd?: T;

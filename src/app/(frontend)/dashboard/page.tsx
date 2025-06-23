@@ -19,15 +19,12 @@ export const metadata: Metadata = {
 
 async function getUser() {
   const payload = await getPayloadClient()
-  const { docs } = await payload.find({
-    collection: 'users',
-    where: {
-      id: {
-        equals: 'me',
-      },
+  const { user } = await payload.auth({
+    headers: {
+      // This will get the current user from the request
     },
   })
-  return docs[0]
+  return user
 }
 
 export default async function DashboardPage() {

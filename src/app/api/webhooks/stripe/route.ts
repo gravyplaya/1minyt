@@ -50,7 +50,7 @@ export async function POST(req: Request) {
             },
           },
           data: {
-            stripeID: session.customer as string,
+            stripeCustomerId: session.customer as string,
             stripeSubscriptionId: subscription.id,
             stripeSubscriptionStatus: subscription.status,
             stripeSubscriptionCurrentPeriodEnd: new Date(
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
         await payload.update({
           collection: 'users',
           where: {
-            stripeID: {
+            stripeCustomerId: {
               equals: subscription.customer as string,
             },
           },
@@ -105,7 +105,7 @@ export async function POST(req: Request) {
         await payload.update({
           collection: 'users',
           where: {
-            stripeID: {
+            stripeCustomerId: {
               equals: subscription.customer as string,
             },
           },

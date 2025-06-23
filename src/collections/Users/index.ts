@@ -69,7 +69,7 @@ export const Users: CollectionConfig = {
       },
     },
     {
-      name: 'stripeID',
+      name: 'stripeCustomerId',
       type: 'text',
       admin: {
         readOnly: true,
