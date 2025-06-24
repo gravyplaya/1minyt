@@ -23,5 +23,11 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
 
   // For all other URLs, prepend the base URL
   const baseUrl = getClientSideURL()
-  return cacheTag ? `${baseUrl}/${cleanUrl}?${cacheTag}` : `${baseUrl}/${cleanUrl}`
+
+  // Ensure we don't create double slashes by properly joining the base URL and path
+  const fullUrl = baseUrl.endsWith('/')
+    ? `${baseUrl}${cleanUrl.replace(/^\//, '')}`
+    : `${baseUrl}/${cleanUrl.replace(/^\//, '')}`
+
+  return cacheTag ? `${fullUrl}?${cacheTag}` : fullUrl
 }
