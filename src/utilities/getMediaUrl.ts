@@ -21,13 +21,11 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     .replace(/^\/+/, '/') // Remove leading slashes
     .replace(/\/+$/, '') // Remove trailing slashes
 
-  // For all other URLs, prepend the base URL
+  // For all other URLs, use the Payload API endpoint
   const baseUrl = getClientSideURL()
 
-  // Ensure we don't create double slashes by properly joining the base URL and path
-  const fullUrl = baseUrl.endsWith('/')
-    ? `${baseUrl}${cleanUrl.replace(/^\//, '')}`
-    : `${baseUrl}/${cleanUrl.replace(/^\//, '')}`
+  // Use the Payload API endpoint for media files
+  const apiUrl = `${baseUrl}/api/media${cleanUrl}`
 
-  return cacheTag ? `${fullUrl}?${cacheTag}` : fullUrl
+  return cacheTag ? `${apiUrl}?${cacheTag}` : apiUrl
 }
