@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/getPayload'
+import { User } from '@/payload-types'
 import {
   Card,
   CardContent,
@@ -17,14 +19,55 @@ export const metadata: Metadata = {
   description: 'Welcome to your dashboard',
 }
 
-async function getUser() {
+async function getUser(): Promise<User | null> {
   const payload = await getPayloadClient()
   const { user } = await payload.auth({
     headers: {
-      // This will get the current user from the request
+      append: function (name: string, value: string): void {
+        throw new Error('Function not implemented.')
+      },
+      delete: function (name: string): void {
+        throw new Error('Function not implemented.')
+      },
+      get: function (name: string): string | null {
+        throw new Error('Function not implemented.')
+      },
+      getSetCookie: function (): string[] {
+        throw new Error('Function not implemented.')
+      },
+      has: function (name: string): boolean {
+        throw new Error('Function not implemented.')
+      },
+      set: function (name: string, value: string): void {
+        throw new Error('Function not implemented.')
+      },
+      forEach: function (
+        callbackfn: (value: string, key: string, parent: Headers) => void,
+        thisArg?: any,
+      ): void {
+        throw new Error('Function not implemented.')
+      },
+      entries: function (): HeadersIterator<[string, string]> {
+        throw new Error('Function not implemented.')
+      },
+      keys: function (): HeadersIterator<string> {
+        throw new Error('Function not implemented.')
+      },
+      values: function (): HeadersIterator<string> {
+        throw new Error('Function not implemented.')
+      },
+      [Symbol.iterator]: function (): HeadersIterator<[string, string]> {
+        throw new Error('Function not implemented.')
+      },
     },
   })
-  return user
+
+  // Type guard to ensure user is a User and not a Submission
+  if (user && 'collection' in user && user.collection === 'users') {
+    return user as User
+  }
+
+  return null
 }
 
 export default async function DashboardPage() {
