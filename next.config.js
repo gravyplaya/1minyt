@@ -19,7 +19,7 @@ const nextConfig = {
         }
       }),
       {
-        hostname: '1minyt.vercel.app',
+        hostname: '1minyt.com',
         protocol: 'https',
       },
     ],
