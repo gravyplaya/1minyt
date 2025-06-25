@@ -90,5 +90,5 @@ export const plugins: Plugin[] = [
       },
     },
   }),
-  payloadCloudPlugin(),
+  // payloadCloudPlugin(), // Commented out because it conflicts with custom S3 storage
 ]

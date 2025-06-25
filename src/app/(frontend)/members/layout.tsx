@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Members',
-  description: 'Sign up or login to access member-only content',
+  title: '1minyt.com',
+  description: 'Transcribe, Summarize, and Chat with your videos.',
 }
 
 export default function MembersLayout({ children }: { children: React.ReactNode }) {

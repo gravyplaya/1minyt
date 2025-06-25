@@ -1,4 +1,4 @@
-// storage-adapter-import-placeholder
+import { s3Storage } from '@payloadcms/storage-s3'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 
 import sharp from 'sharp' // sharp-import
@@ -89,6 +89,36 @@ export default buildConfig({
           // do something...
         },
       },
+    }),
+    s3Storage({
+      collections: {
+        media: {
+          signedDownloads: {
+            shouldUseSignedURL: ({
+              collection,
+              filename,
+              req,
+            }: {
+              collection: any
+              filename: string
+              req: any
+            }) => {
+              return filename.endsWith('.mp4')
+            },
+          } as any,
+        },
+      },
+      config: {
+        credentials: {
+          accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+        },
+        endpoint: process.env.R2_ENDPOINT || '',
+        region: 'auto',
+        forcePathStyle: true, // Required for R2 compatibility
+      },
+      bucket: process.env.R2_BUCKET || '',
+      clientUploads: true, // Enable client-side uploads to avoid server-side context issues
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,

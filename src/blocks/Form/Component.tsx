@@ -61,7 +61,7 @@ export const FormBlock: React.FC<
           const controller = new AbortController()
           const timeoutId = setTimeout(() => {
             controller.abort('Request timeout')
-          }, 10000) // 10 second timeout
+          }, 10000) // 10 second timeout - should be plenty since we use Payload's internal API now
 
           const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
             body: JSON.stringify({

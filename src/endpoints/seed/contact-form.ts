@@ -14,7 +14,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
               format: 0,
               mode: 'normal',
               style: '',
-              text: 'The contact form has been submitted successfully.',
+              text: 'Thanks for contacting us! We will get back to you as soon as possible.',
               version: 1,
             },
           ],
