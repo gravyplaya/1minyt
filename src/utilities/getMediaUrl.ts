@@ -9,9 +9,15 @@ import { getClientSideURL } from '@/utilities/getURL'
 export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | null): string => {
   if (!url) return ''
 
-  // If the URL is already a full URL, return it as is
+  // If the URL is already a full URL (from S3/R2), return it as is
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return cacheTag ? `${url}?${cacheTag}` : url
+  }
+
+  // For relative URLs that start with /media (local development)
+  if (url.startsWith('/media')) {
+    const baseUrl = getClientSideURL()
+    return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
   }
 
   // Clean up the URL path
@@ -21,10 +27,8 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     .replace(/^\/+/, '/') // Remove leading slashes
     .replace(/\/+$/, '') // Remove trailing slashes
 
-  // For all other URLs, use the Payload API endpoint
+  // For all other URLs, use the Payload API endpoint (fallback)
   const baseUrl = getClientSideURL()
-
-  // Use the Payload API endpoint for media files
   const apiUrl = `${baseUrl}/api/media${cleanUrl}`
 
   return cacheTag ? `${apiUrl}?${cacheTag}` : apiUrl

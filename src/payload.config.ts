@@ -93,6 +93,7 @@ export default buildConfig({
     s3Storage({
       collections: {
         media: {
+          disablePayloadAccessControl: true, // This will make URLs point directly to R2
           signedDownloads: {
             shouldUseSignedURL: ({
               collection,
