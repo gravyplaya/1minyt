@@ -22,6 +22,10 @@ const nextConfig = {
         hostname: '1minyt.com',
         protocol: 'https',
       },
+      {
+        hostname: 'pub-b7962ba013f141bca462fa179b6bb6a0.r2.dev',
+        protocol: 'https',
+      },
     ],
   },
   reactStrictMode: true,

@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 
 interface SearchComponentProps {
@@ -13,6 +14,7 @@ interface ChatMessage {
 }
 
 export default function SearchComponent({ userId }: SearchComponentProps) {
+  const searchParams = useSearchParams()
   const [query, setQuery] = useState('')
   const [activeTab, setActiveTab] = useState('transcript')
   const [results, setResults] = useState<{ transcript: string; summary: string } | null>(null)
@@ -31,6 +33,39 @@ export default function SearchComponent({ userId }: SearchComponentProps) {
   ])
   const [chatInput, setChatInput] = useState('')
   const [isChatLoading, setIsChatLoading] = useState(false)
+
+  // Check for URL parameter from homepage and auto-submit
+  useEffect(() => {
+    const urlParam = searchParams.get('url')
+    if (urlParam) {
+      setQuery(urlParam)
+      // Auto-submit after setting the query
+      setTimeout(() => {
+        handleSubmitWithUrl(urlParam)
+      }, 100)
+    }
+  }, [searchParams, userId])
+
+  const handleSubmitWithUrl = async (url: string) => {
+    setIsLoading(true)
+
+    try {
+      const response = await fetch('/api/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: url, userId }),
+      })
+
+      const data = await response.json()
+      setResults(data)
+    } catch (error) {
+      console.error('Error fetching results:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
