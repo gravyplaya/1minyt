@@ -140,7 +140,7 @@ export default function SearchComponent({ userId }: SearchComponentProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen ">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">

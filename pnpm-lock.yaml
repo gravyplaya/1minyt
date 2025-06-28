@@ -101,6 +101,9 @@ importers:
       next-sitemap:
         specifier: ^4.2.3
         version: 4.2.3(next@15.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))
+      ogl:
+        specifier: ^1.0.11
+        version: 1.0.11
       payload:
         specifier: 3.40.0
         version: 3.40.0(graphql@16.11.0)(typescript@5.7.3)
@@ -4104,6 +4107,9 @@ packages:
 
   obuf@1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
+
+  ogl@1.0.11:
+    resolution: {integrity: sha512-kUpC154AFfxi16pmZUK4jk3J+8zxwTWGPo03EoYA8QPbzikHoaC82n6pNTbd+oEaJonaE8aPWBlX7ad9zrqLsA==}
 
   on-exit-leak-free@2.1.2:
     resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
@@ -10283,6 +10289,8 @@ snapshots:
       es-object-atoms: 1.1.1
 
   obuf@1.1.2: {}
+
+  ogl@1.0.11: {}
 
   on-exit-leak-free@2.1.2: {}
 

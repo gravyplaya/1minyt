@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 }
 
 export default function MembersLayout({ children }: { children: React.ReactNode }) {
-  return children
+  return <div className="bg-black min-h-screen">{children}</div>
 }
