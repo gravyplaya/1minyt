@@ -118,12 +118,22 @@ export default function SearchComponent({ userId }: SearchComponentProps) {
 
       const data = await response.json()
 
-      const assistantMessage: ChatMessage = {
-        role: 'assistant',
-        content: data.output,
+      if (data.output) {
+        const assistantMessage: ChatMessage = {
+          role: 'assistant',
+          content: data.output,
+        }
+        setChatMessages(prev => [...prev, assistantMessage])
+      } else {
+        console.error('Unexpected API response structure:', data)
+        setChatMessages(prev => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: "I'm sorry, I received a response, but I couldn't understand it. Please try again.",
+          },
+        ])
       }
-
-      setChatMessages((prev) => [...prev, assistantMessage])
     } catch (error) {
       console.error('Error sending chat message:', error)
       // Add error message to chat
